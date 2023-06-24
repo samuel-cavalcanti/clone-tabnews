@@ -7,7 +7,7 @@ const centerDiv = {
     'align-items':'center',
 }
 
-const textWidth = 600;
+const textWidth = '80%';
 const pStyle = {'font-size':'large','width':textWidth}
 
 function PLetter(params) {
@@ -18,7 +18,7 @@ function Home(params) {
    return (
     <div style={centerDiv}> 
         <h1> Cartinha dos dias das mães 2020 </h1>
-            <Image src="/assets/drawing.svg" width={textWidth} height="300" alt="duas crianças e uma mãe" />
+            <Image src="/assets/drawing.svg" width='600' height="300" alt="duas crianças e uma mãe" />
             <PLetter> Querida Mamãe... </PLetter>
             <PLetter>
                 Não lembro quando foi que te vi pela primeira vez, sinto que sempre te
@@ -68,9 +68,9 @@ function Home(params) {
 
        <PLetter>
             Por fim, mas não menos importante, falta dizer o quanto eu te amo e a
-            resposta é muito.
-            Muito eu te amo, eu te amo muito,
-            do seu querido e amado filho, Samuel.
+resposta é muito.
+Muito eu te amo, eu te amo muito,
+do seu querido e amado filho, Samuel.
        </PLetter>
     </div>
    ); 
