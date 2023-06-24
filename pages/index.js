@@ -18,7 +18,7 @@ function Home(params) {
    return (
     <div style={centerDiv}> 
         <h1> Cartinha dos dias das mães 2020 </h1>
-            <Image src="/assets/drawing.svg" width='600' height="300" alt="duas crianças e uma mãe" />
+            <Image src="/assets/drawing.svg" width='400' height="200" alt="duas crianças e uma mãe" />
             <PLetter> Querida Mamãe... </PLetter>
             <PLetter>
                 Não lembro quando foi que te vi pela primeira vez, sinto que sempre te
