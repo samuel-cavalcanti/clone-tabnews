@@ -6,9 +6,12 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "dev": " next dev",
+    "dev": " npm run services:up && next dev",
     "lint:check": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "services:up":"podman-compose -f  infra/compose.yaml up -d",
+    "services:stop":"podman-compose -f  infra/compose.yaml stop",
+    "services:down":"podman-compose -f  infra/compose.yaml down"
   },
   "author": "",
   "license": "MIT",
