@@ -17,8 +17,8 @@ function Home(params) {
           "margin-inline": "5em",
         }}
       >
-      OLá mundo
-    </p>
+        OLá mundo
+      </p>
     </div>
   );
 }
