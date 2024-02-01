@@ -9,15 +9,42 @@ async function query(query) {
     password: process.env.POSTGRES_PASSWORD,
   });
 
-  await client.connect();
+  try {
+    await client.connect();
 
-  const result = await client.query(query);
+    const result = await client.query(query);
 
-  await client.end();
+    await client.end();
 
-  return result;
+    return result;
+  } catch (error) {
+    console.error("PostgresSQL error", error);
+  } finally {
+    await client.end();
+  }
+}
+
+async function settings() {
+  const sql = `
+SELECT current_setting('server_version') as version,
+       current_setting('max_connections')::integer as max_conn,
+       count(*)::int as n_conn
+FROM pg_stat_activity
+WHERE
+     datname = '${process.env.POSTGRES_DB}'
+;
+  `;
+  const sqlResult = await query(sql);
+  const ps_settings = sqlResult.rows[0];
+
+  return {
+    version: ps_settings.version,
+    maxConnections: ps_settings.max_conn,
+    numberOfConnections: ps_settings.n_conn,
+  };
 }
 
 export default {
   query: query,
+  settings: settings,
 };
