@@ -17,13 +17,8 @@ function Home(params) {
           "margin-inline": "5em",
         }}
       >
-        Pensando <strong>modo Tabnews</strong>. Esse pedacinho de internet
-        deverá possuir todos conteúdos de valor concretos feitos por mim. Assim
-        como o Tabnews avalia o valor do conteúdo pela sua capacidade de
-        aglutinar pessoas em seu entorno. Os conteúdos postados neste pedacinho,
-        são avaliados no quanto esse conhecimento me conectou com diferentes
-        pessoas
-      </p>
+      OLá mundo
+    </p>
     </div>
   );
 }
