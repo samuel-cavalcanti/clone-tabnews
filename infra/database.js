@@ -19,6 +19,7 @@ async function query(query) {
     return result;
   } catch (error) {
     console.error("PostgresSQL error", error);
+    throw error;
   } finally {
     await client.end();
   }
