@@ -14,5 +14,4 @@ test("GET to /api/v1/status should be 200 (OK)", async () => {
   expect(database.version).toBe(psVersion);
   expect(database.max_connections).toBe(psMaxConnections);
   expect(database.number_of_connections).toBe(psNumberOfConnections);
-  console.log(body);
 });
