@@ -2,46 +2,33 @@ import pgMigrate from "node-pg-migrate";
 import { join } from "node:path";
 import { NextApiRequest, NextApiResponse } from "next";
 
-
 /**
- * @param {NextApiRequest} request 
- * @param {NextApiResponse} response 
+ * @param {NextApiRequest} request
+ * @param {NextApiResponse} response
  */
 export default async function migrations(request, response) {
-
-  if (request.method === "GET") {
-    const migrations = await  dryRun();
-    return response.status(200).json(migrations);
-  }
-
-  if (request.method === "POST") {
-    const migrations = await liveRun();
-    return response.status(200).json(migrations);
-  }
-
-  response.status(405).end();
-}
-
-function dryRun() {
-  const migrations = pgMigrate({
+  const defualtMigrateConfig = {
     databaseUrl: process.env.DATABASE_URL,
     dryRun: true,
     dir: join("infra", "migrations"),
     direction: "up",
     verbose: true,
     migrationsTable: "pgmigrations",
-  });
+  };
 
-  return migrations;
-}
+  if (request.method === "GET") {
+    const dryRunMigrations = await pgMigrate(defualtMigrateConfig);
+    return response.status(200).json(dryRunMigrations);
+  }
 
-function liveRun() {
-  return pgMigrate({
-    databaseUrl: process.env.DATABASE_URL,
-    dryRun: false,
-    dir: join("infra", "migrations"),
-    direction: "up",
-    verbose: true,
-    migrationsTable: "pgmigrations",
-  });
+  if (request.method === "POST") {
+    const liveRunMigrations = await pgMigrate({
+      ...defualtMigrateConfig,
+      dryRun: false,
+    });
+    const status = liveRunMigrations.length > 0 ? 201 : 200;
+    return response.status(status).json(liveRunMigrations);
+  }
+
+  response.status(405).end();
 }
