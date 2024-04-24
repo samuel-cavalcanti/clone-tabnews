@@ -1,26 +1,8 @@
 import { Client } from "pg";
 
 async function query(query) {
-  const client = new Client({
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "production" ? true : false,
-  });
-
-  try {
-    await client.connect();
-
-    const result = await client.query(query);
-    return result;
-  } catch (error) {
-    console.error("PostgresSQL error", error);
-    throw error;
-  } finally {
-    await client.end();
-  }
+  const queryResult = await withClient(async (client) =>  client.query(query));
+  return queryResult;
 }
 
 async function settings() {
@@ -43,7 +25,34 @@ WHERE
   };
 }
 
+function getNewClient() {
+  const client = new Client({
+    host: process.env.POSTGRES_HOST,
+    port: process.env.POSTGRES_PORT,
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    ssl: process.env.NODE_ENV === "production" ? true : false,
+  });
+
+  return client;
+}
+
+async function withClient(func) {
+  const client = getNewClient();
+  try {
+    await client.connect();
+    return await func(client);
+  } catch (error) {
+    console.error("PostgresSQL error", error);
+    throw error;
+  } finally {
+    await client.end();
+  }
+}
+
 export default {
   query: query,
   settings: settings,
+  withClient,
 };
