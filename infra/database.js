@@ -1,9 +1,6 @@
 import { Client } from "pg";
 
-async function query(query) {
-  const queryResult = await withClient(async (client) =>  client.query(query));
-  return queryResult;
-}
+const query = (query) => withClient((client) => client.query(query));
 
 async function settings() {
   const sql = `
@@ -25,7 +22,7 @@ WHERE
   };
 }
 
-function getNewClient() {
+async function withClient(func) {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
@@ -34,12 +31,6 @@ function getNewClient() {
     password: process.env.POSTGRES_PASSWORD,
     ssl: process.env.NODE_ENV === "production" ? true : false,
   });
-
-  return client;
-}
-
-async function withClient(func) {
-  const client = getNewClient();
   try {
     await client.connect();
     return await func(client);
