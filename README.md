@@ -13,7 +13,7 @@ mpn run dev
 inicialize o banco postgres
 
 ```bash
-podman-compose -f  infra/compose.yaml up -d
+mpn run services:up
 ```
 
 
