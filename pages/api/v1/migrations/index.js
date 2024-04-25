@@ -11,9 +11,12 @@ export default async function migrations(request, response) {
   const isDryRun = { POST: false, GET: true };
   const dryRun = isDryRun[request.method];
 
-  if (dryRun === undefined) return response.status(405).end();
+  if (dryRun === undefined)
+    return response
+      .status(405)
+      .json({ error: `Method "${request.method}" not allowed` });
 
-  const migrations = await database.withClient(async (client) => {
+  const migrations = await database.withClient((client) => {
     return pgMigrate({
       dbClient: client,
       dryRun,
