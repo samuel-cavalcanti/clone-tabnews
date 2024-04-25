@@ -43,7 +43,7 @@ async function withClient(func) {
 }
 
 export default {
-  query: query,
-  settings: settings,
+  query,
+  settings,
   withClient,
 };
