@@ -14,4 +14,3 @@ jobs:
       - run: pip3 install podman-compose
       - run: npm ci
       - run: npm test
-      - run: echo $?
