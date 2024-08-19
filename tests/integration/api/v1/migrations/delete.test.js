@@ -9,5 +9,5 @@ test("NOT Allowed methods /api/v1/migrations", async () => {
   const json = await response.json();
 
   expect(response.status).toBe(405);
-  expect(json.error).toBe(`Method "DELETE" not allowed`)
+  expect(json.error).toBe(`Method "DELETE" not allowed`);
 });
