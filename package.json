@@ -9,6 +9,8 @@
     "dev": " npm run services:up:wait && npm run migration:up && next dev",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
+    "lint:eslint:check": "next lint",
+    "lint:eslint:fix": "next lint --fix",
     "services:up": "podman-compose -f  infra/compose.yaml up -d",
     "services:up:wait": "npm run services:up && npm run wait-for-postgres",
     "services:stop": "podman-compose -f  infra/compose.yaml stop",
