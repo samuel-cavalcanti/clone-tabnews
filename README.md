@@ -5,7 +5,7 @@
 Inicialize o servidor web na porta 3000
 
 ```bash
-mpn run dev
+npm run dev
 ```
 
 Execute os testes em watch mode
