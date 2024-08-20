@@ -42,8 +42,10 @@ async function withClient(func) {
   }
 }
 
-export default {
+const database = {
   query,
   settings,
   withClient,
 };
+
+export default database;
