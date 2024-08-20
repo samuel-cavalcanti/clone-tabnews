@@ -1,12 +1,7 @@
 import pgMigrate from "node-pg-migrate";
 import { join } from "node:path";
-import { NextApiRequest, NextApiResponse } from "next";
 import database from "infra/database";
 
-/**
- * @param {NextApiRequest} request
- * @param {NextApiResponse} response
- */
 export default async function migrations(request, response) {
   const isDryRun = { POST: false, GET: true };
   const dryRun = isDryRun[request.method];

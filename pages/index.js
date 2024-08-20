@@ -1,4 +1,4 @@
-function Home(params) {
+function Home() {
   return (
     <div
       style={{
