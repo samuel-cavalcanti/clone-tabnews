@@ -9,7 +9,7 @@ function checkPostgres() {
         process.stdout.write(".");
         checkPostgres();
       } else console.log("is ready");
-    }
+    },
   );
 }
 console.log("Waiting for postgres");
