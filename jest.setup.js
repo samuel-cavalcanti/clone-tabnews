@@ -16,7 +16,5 @@ async function waitNext() {
 }
 
 beforeAll(async () => {
-  process.stdout.write("wait http Next server\n");
   await waitNext();
-  process.stdout.write("http Next server is OK \n");
 });
