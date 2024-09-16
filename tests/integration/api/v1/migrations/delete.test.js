@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test, describe } from "@jest/globals";
 
 describe("NOT Allowed methods /api/v1/migrations", () => {
   describe("Anonymous user", () => {

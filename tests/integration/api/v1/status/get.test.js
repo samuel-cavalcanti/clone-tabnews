@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, test, describe } from "@jest/globals";
 
 describe("Retriving current system status", () => {
   describe("Anonymous user", () => {

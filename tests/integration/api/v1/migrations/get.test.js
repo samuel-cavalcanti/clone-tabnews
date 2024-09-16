@@ -1,18 +1,4 @@
-import database from "infra/database.js";
-import { expect, test } from "@jest/globals";
-
-const cleanDB = () =>
-  database.query("drop schema public cascade; create schema public;");
-
-function checkEnv() {
-  expect(process.env.NODE_ENV).toBe("test");
-  expect(process.env.DATABASE_URL).toBeDefined();
-}
-
-beforeAll(async () => {
-  checkEnv();
-  await cleanDB();
-});
+import { expect, test, describe } from "@jest/globals";
 
 describe("Running pending migrations in dryrun mode", () => {
   describe("Anonymous user", () => {
@@ -28,3 +14,4 @@ describe("Running pending migrations in dryrun mode", () => {
     });
   });
 });
+

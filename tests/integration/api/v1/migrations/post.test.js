@@ -1,12 +1,4 @@
-import database from "infra/database.js";
 import { expect, test, describe } from "@jest/globals";
-
-const cleanDB = () =>
-  database.query("drop schema public cascade; create schema public;");
-
-beforeAll(async () => {
-  await cleanDB();
-});
 
 describe("Running pending migrations", () => {
   describe("Anonymous user", () => {
