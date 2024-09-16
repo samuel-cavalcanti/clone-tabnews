@@ -8,7 +8,7 @@ async function fetchStatus() {
     throw Error(`${response.status}\n${response.statusText}`);
 }
 
-const cleanDB = () =>
+const clearDB = () =>
   database.query("drop schema public cascade; create schema public;");
 
 async function waitServices() {
@@ -21,6 +21,6 @@ async function waitServices() {
 }
 
 module.exports = {
-  cleanDB,
+  clearDB,
   waitServices,
 };
