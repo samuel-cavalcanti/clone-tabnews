@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run services:up:wait && concurrently --names next,jest --hide next  'next dev' 'jest --runInBand' --kill-others --success command-jest",
-    "test:watch": "jest --watchAll --runInBand",
+    "test:watch": "jest --watchAll --runInBand --verbose",
     "dev": " npm run services:up:wait && npm run migrations:up && next dev",
     "postdev": "npm run services:down",
     "posttest": "npm run services:down",
