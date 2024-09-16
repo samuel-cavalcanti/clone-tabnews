@@ -14,4 +14,3 @@ describe("Running pending migrations in dryrun mode", () => {
     });
   });
 });
-
