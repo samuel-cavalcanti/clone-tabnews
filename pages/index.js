@@ -17,7 +17,7 @@ function Home() {
           "margin-inline": "5em",
         }}
       >
-        Olá mundo
+        OLá mundo
       </p>
     </div>
   );
