@@ -33,3 +33,21 @@ export class MethodNotAllowedError extends Error {
     };
   }
 }
+
+export class ServiceUnavailableError extends Error {
+  constructor({ cause, service }) {
+    super(`${service} está apresentando falha ou está indisponível`, { cause });
+    this.name = "Service Unavailable";
+    this.statusCode = 503;
+    this.action = "entre em contato com o suporte";
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
