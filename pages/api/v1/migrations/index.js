@@ -1,15 +1,12 @@
 import pgMigrate from "node-pg-migrate";
 import { resolve } from "node:path";
 import database from "infra/database";
+import { createRouter } from "next-connect";
+import { InternalServerError, MethodNotAllowedError } from "infra/error/errors";
 
-export default async function migrations(request, response) {
+async function migrations(request, response) {
   const isDryRun = { POST: false, GET: true };
   const dryRun = isDryRun[request.method];
-
-  if (dryRun === undefined)
-    return response
-      .status(405)
-      .json({ error: `Method "${request.method}" not allowed` });
 
   const migrations = await database.withClient((client) => {
     return pgMigrate({
@@ -26,3 +23,23 @@ export default async function migrations(request, response) {
 
   return response.status(status).json(migrations);
 }
+
+function onNoMatchHandler(_request, response) {
+  const error = new MethodNotAllowedError();
+
+  response.status(error.statusCode).json(error);
+}
+
+function onErrorHandler(error, _request, response) {
+  const publicError = new InternalServerError({ cause: error });
+  console.error("Internal Error on status", publicError);
+  response.status(publicError.statusCode).json(publicError);
+}
+
+const router = createRouter();
+
+router.get(migrations).post(migrations);
+export default router.handler({
+  onNoMatch: onNoMatchHandler,
+  onError: onErrorHandler,
+});
