@@ -1,4 +1,5 @@
 import { Client } from "pg";
+import { ServiceUnavailableError } from "./error/errors";
 
 const query = (query) => withClient((client) => client.query(query));
 
@@ -35,8 +36,12 @@ async function withClient(func) {
     await client.connect();
     return await func(client);
   } catch (error) {
-    console.error("PostgresSQL error", error);
-    throw error;
+    const serviceError = new ServiceUnavailableError({
+      service: "PostgresSQL",
+      cause: error,
+    });
+    console.error("PostgresSQL error", serviceError);
+    throw serviceError;
   } finally {
     await client.end();
   }
