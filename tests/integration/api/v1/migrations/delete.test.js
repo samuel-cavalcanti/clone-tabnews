@@ -11,7 +11,9 @@ describe("NOT Allowed methods /api/v1/migrations", () => {
       const json = await response.json();
 
       expect(response.status).toBe(405);
-      expect(json.error).toBe(`Method "DELETE" not allowed`);
+      expect(json.message).toBe("Método não permitido para esse END point");
+      expect(json.status_code).toBe(405);
+      expect(json.name).toBe("Method Not Allowed");
     });
   });
 });
