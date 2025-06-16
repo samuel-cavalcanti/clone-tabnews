@@ -1,5 +1,6 @@
 import retry from "async-retry";
 import database from "infra/database.js";
+import { runMigrations } from "models/migrator";
 
 async function fetchStatus() {
   const baseUrl = "http://localhost:3000";
@@ -19,8 +20,10 @@ async function waitServices() {
   };
   await retry(fetchStatus, retryParams);
 }
+const waitMigrations = () => runMigrations(false);
 
 module.exports = {
   clearDB,
   waitServices,
+  waitMigrations,
 };
