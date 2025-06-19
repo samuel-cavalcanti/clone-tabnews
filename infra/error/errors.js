@@ -62,3 +62,14 @@ export class ValidationError extends CustomError {
     });
   }
 }
+export class NotFoundError extends CustomError {
+  constructor({ message, cause, action }) {
+    super({
+      message: message || "recurso não encontrado",
+      cause,
+      name:"Not Found Error",
+      action,
+      statusCode: 404,
+    });
+  }
+}

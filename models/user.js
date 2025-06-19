@@ -1,8 +1,28 @@
 import database from "infra/database";
-import { ValidationError } from "infra/error/errors";
+import { NotFoundError, ValidationError } from "infra/error/errors";
+
 async function create(userInputValues) {
   const newUser = await insertUserToDB(userInputValues);
   return newUser;
+}
+async function findUserByUsername(username) {
+  const results = await database.query({
+    text: `SELECT 
+                username, email, created_at, updated_at 
+             FROM users 
+             WHERE 
+                    username = $1
+             LIMIT 1
+             ;`,
+    values: [username],
+  });
+
+  if (results.rowCount == 0)
+    throw new NotFoundError({
+      message: `O username: ${username} não foi encontrado`,
+      action: "Verifique se o username está digitado corretamente",
+    });
+  return results.rows[0];
 }
 
 async function insertUserToDB(user) {
@@ -28,5 +48,6 @@ async function insertUserToDB(user) {
 
 const userInputValues = {
   create,
+  findUserByUsername,
 };
 export default userInputValues;
