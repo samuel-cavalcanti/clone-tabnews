@@ -1,6 +1,11 @@
 import database from "infra/database.js";
 import { createDefaultRouter } from "infra/router";
 
+
+/**
+ * @param request {import('next/server').NextRequest}
+ * @param response {import('next/server').NextResponse}
+ */
 async function status(_request, response) {
   const settings = await database.settings();
   const updatedAt = new Date();
