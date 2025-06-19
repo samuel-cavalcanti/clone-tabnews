@@ -1,4 +1,5 @@
 import { createRouter } from "next-connect";
+import { CustomError } from "./error/errors";
 
 import { InternalServerError, MethodNotAllowedError } from "infra/error/errors";
 
@@ -12,7 +13,11 @@ export function createDefaultRouter() {
   }
 
   function onErrorHandler(error, _request, response) {
-    const publicError = new InternalServerError({ cause: error });
+    const publicError =
+      error instanceof CustomError
+        ? error
+        : new InternalServerError({ cause: error });
+
     response.status(publicError.statusCode).json(publicError);
   }
 
