@@ -67,7 +67,7 @@ export class NotFoundError extends CustomError {
     super({
       message: message || "recurso não encontrado",
       cause,
-      name:"Not Found Error",
+      name: "Not Found Error",
       action,
       statusCode: 404,
     });

@@ -1,7 +1,6 @@
 import { createDefaultRouter } from "infra/router";
 import { runMigrations } from "models/migrator";
 
-
 /**
  * @param request {import('next/server').NextRequest}
  * @param response {import('next/server').NextResponse}

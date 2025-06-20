@@ -1,7 +1,6 @@
 import database from "infra/database.js";
 import { createDefaultRouter } from "infra/router";
 
-
 /**
  * @param request {import('next/server').NextRequest}
  * @param response {import('next/server').NextResponse}
