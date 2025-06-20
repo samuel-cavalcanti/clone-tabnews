@@ -4,40 +4,10 @@ import orch from "infra/scripts/orchestrator";
 beforeAll(() => orch.waitMigrations());
 
 describe("GET /api/v1/users/[username]", () => {
-  function toDate(dateString) {
-    const date = Date.parse(dateString);
-    const formatter = new Intl.DateTimeFormat("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
-    return formatter.format(date);
-  }
-
-  function changeUserDateFormat(user) {
-    return {
-      ...user,
-      updated_at: toDate(user.updated_at),
-      created_at: toDate(user.created_at),
-    };
-  }
-  const TODAY = toDate(new Date().toString());
-
   describe("Anonymous user", () => {
     const baseUrl = "http://localhost:3000";
 
     const getUser = (user) => fetch(`${baseUrl}/api/v1/users/${user.username}`);
-
-    async function getUsers(users) {
-      const results = [];
-      for (const user of users) {
-        let response = await getUser(user);
-        results.push(await response.json());
-      }
-
-      return results;
-    }
 
     const postUser = (user) =>
       fetch(`${baseUrl}/api/v1/users`, {
