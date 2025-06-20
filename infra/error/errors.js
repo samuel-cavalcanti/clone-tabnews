@@ -1,53 +1,75 @@
-export class InternalServerError extends Error {
+export class CustomError extends Error {
+  constructor({ name, message, action, statusCode, cause }) {
+    super(message, { cause });
+    this.name = name;
+    this.statusCode = statusCode;
+    this.action = action;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
+export class InternalServerError extends CustomError {
   constructor({ cause }) {
-    super("Um erro interno não esperado aconteceu.", { cause });
-    this.name = "Internal Server Error";
-    this.statusCode = 500;
-    this.action = "entre em contato com o suporte";
-  }
-
-  toJSON() {
-    return {
-      name: this.name,
-      message: this.message,
-      action: this.action,
-      status_code: this.statusCode,
-    };
+    super({
+      message: "Um erro interno não esperado aconteceu.",
+      name: "Internal Server Error",
+      statusCode: 500,
+      action: "entre em contato com o suporte",
+      cause,
+    });
   }
 }
 
-export class MethodNotAllowedError extends Error {
+export class MethodNotAllowedError extends CustomError {
   constructor() {
-    super("Método não permitido para esse END point");
-    this.name = "Method Not Allowed";
-    this.statusCode = 405;
-    this.action = "verifique se o método HTTP utilizado é valido";
-  }
-
-  toJSON() {
-    return {
-      name: this.name,
-      message: this.message,
-      action: this.action,
-      status_code: this.statusCode,
-    };
+    super({
+      message: "Método não permitido para esse END point",
+      name: "Method Not Allowed",
+      statusCode: 405,
+      action: "verifique se o método HTTP utilizado é valido",
+    });
   }
 }
 
-export class ServiceUnavailableError extends Error {
+export class ServiceUnavailableError extends CustomError {
   constructor({ cause, service }) {
-    super(`${service} está apresentando falha ou está indisponível`, { cause });
-    this.name = "Service Unavailable";
-    this.statusCode = 503;
-    this.action = "entre em contato com o suporte";
+    super({
+      message: `${service} está apresentando falha ou está indisponível`,
+      cause,
+      name: "Service Unavailable",
+      statusCode: 503,
+      action: "entre em contato com o suporte",
+    });
   }
+}
 
-  toJSON() {
-    return {
-      name: this.name,
-      message: this.message,
-      action: this.action,
-      status_code: this.statusCode,
-    };
+export class ValidationError extends CustomError {
+  constructor({ cause, message, action }) {
+    super({
+      message: message || "Erro de validação aconteceu",
+      cause,
+      name: "Validation Error",
+      action: action || "Ajuste os dados enviados e tente novamente.",
+      statusCode: 400,
+    });
+  }
+}
+export class NotFoundError extends CustomError {
+  constructor({ message, cause, action }) {
+    super({
+      message: message || "recurso não encontrado",
+      cause,
+      name: "Not Found Error",
+      action,
+      statusCode: 404,
+    });
   }
 }
